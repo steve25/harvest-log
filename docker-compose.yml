@@ -13,6 +13,7 @@ services:
       DB_PASSWORD: root
     depends_on:
       - db
+    user: '${UID}:${GID}'
 
   frontend:
     build: ./frontend
