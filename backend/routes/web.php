@@ -12,3 +12,9 @@ Route::get('/fields', function () {
         'fields' => Field::all()
     ]);
 });
+
+Route::get('/fields/{id}/crops', function ($id) {
+    return response()->json([
+        'crops' => Field::with('crops')->findOrFail($id)->crops
+    ]);
+});

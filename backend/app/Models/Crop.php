@@ -4,11 +4,11 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Field extends Model
+class Crop extends Model
 {
-    public function crops()
+    public function fields()
     {
-        return $this->belongsToMany(Crop::class, 'field_crops')
+        return $this->belongsToMany(Field::class, 'field_crops')
             ->withPivot('hectares')
             ->withTimestamps();
     }

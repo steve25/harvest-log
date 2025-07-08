@@ -11,10 +11,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('weighing', function (Blueprint $table) {
+        Schema::create('weighings', function (Blueprint $table) {
             $table->id();
             $table->foreignId('vehicle_id')->nullable()->constrained()->onDelete('set null');
-            $table->foreignId('field_crop_id')->nullable()->constrained()->onDelete('set_null');
+            $table->foreignId('field_crop_id')->nullable()->constrained()->onDelete('set null');
             $table->decimal('brutto_kg', 10, 2)->nullable();
             $table->decimal('netto_kg', 10, 2)->nullable();
             $table->decimal('tara_kg', 10, 2)->nullable();
@@ -28,6 +28,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('weighing');
+        Schema::dropIfExists('weighings');
     }
 };
