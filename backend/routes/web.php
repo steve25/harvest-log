@@ -48,3 +48,9 @@ Route::post('/weighings', function (StoreWeighingRequest $request) {
         'weighing' => $weighing
     ]);
 });
+
+Route::get('/weighings', function () {
+    return response()->json([
+        'weighings' => Weighing::with(['vehicle', 'fieldCrop'])->get()
+    ]);
+});

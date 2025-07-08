@@ -14,4 +14,14 @@ class Weighing extends Model
         'tara_kg',
         'recorded_at',
     ];
+
+    public function vehicle()
+    {
+        return $this->belongsTo(Vehicle::class);
+    }
+
+    public function fieldCrop()
+    {
+        return $this->belongsTo(FieldCrop::class);
+    }
 }
