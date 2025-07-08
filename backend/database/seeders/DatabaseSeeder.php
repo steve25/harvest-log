@@ -21,9 +21,10 @@ class DatabaseSeeder extends Seeder
         ]);
 
         $this->call([
-            CropsTableSeeder::class,
-            FieldsTableSeeder::class,
-            FieldCropsTableSeeder::class,
+            CropSeeder::class,
+            FieldSeeder::class,
+            FieldCropSeeder::class,
+            VehicleSeeder::class,
         ]);
     }
 }

@@ -8,7 +8,7 @@ use App\Models\Crop;
 use App\Models\Field;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 
-class FieldCropsTableSeeder extends Seeder
+class FieldCropSeeder extends Seeder
 {
     /**
      * Run the database seeds.

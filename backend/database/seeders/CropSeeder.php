@@ -6,7 +6,7 @@ use App\Models\Crop;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
-class CropsTableSeeder extends Seeder
+class CropSeeder extends Seeder
 {
     /**
      * Run the database seeds.
