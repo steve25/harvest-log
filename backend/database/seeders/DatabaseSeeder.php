@@ -25,6 +25,7 @@ class DatabaseSeeder extends Seeder
             FieldSeeder::class,
             FieldCropSeeder::class,
             VehicleSeeder::class,
+            WeighingSeeder::class
         ]);
     }
 }
