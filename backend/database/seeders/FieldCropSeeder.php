@@ -19,19 +19,23 @@ class FieldCropSeeder extends Seeder
         // DB::table('field_crops')->truncate();
 
         // Predpoklad: už sú osiaté všetky polia a plodiny
-        $fieldA = Field::where('name', 'Pole A')->first();
-        $fieldB = Field::where('name', 'Pole B')->first();
-        $fieldC = Field::where('name', 'Pole C')->first();
+        $fieldA = Field::firstOrCreate(['name' => 'Pole A'], ['hectares' => 15.0]);
+        $fieldB = Field::firstOrCreate(['name' => 'Pole B'], ['hectares' => 12.0]);
+        $fieldC = Field::firstOrCreate(['name' => 'Pole C'], ['hectares' => 20.0]);
 
-        $wheat = Crop::where('name', 'Pšenica')->first();
-        $barley = Crop::where('name', 'Jačmeň')->first();
-        $corn = Crop::where('name', 'Kukurica')->first();
+        $crops = Crop::pluck('id', 'name'); // ['Pšenica' => 1, ...]
 
-        $fieldA->crops()->attach($wheat->id, ['hectares' => 7.0]);
-        $fieldA->crops()->attach($barley->id, ['hectares' => 5.5]);
+        // Pole A: Pšenica + Jačmeň
+        $fieldA->crops()->attach($crops['Pšenica'], ['hectares' => 7.0]);
+        $fieldA->crops()->attach($crops['Jačmeň'], ['hectares' => 5.5]);
 
-        $fieldB->crops()->attach($corn->id, ['hectares' => 8.0]);
+        // Pole B: Kukurica + Hrach
+        $fieldB->crops()->attach($crops['Kukurica'], ['hectares' => 6.0]);
+        $fieldB->crops()->attach($crops['Hrach'], ['hectares' => 3.5]);
 
-        $fieldC->crops()->attach($wheat->id, ['hectares' => 15.3]);
+        // Pole C: Repka + Jačmeň + Pšenica
+        $fieldC->crops()->attach($crops['Repka'], ['hectares' => 8.0]);
+        $fieldC->crops()->attach($crops['Jačmeň'], ['hectares' => 5.0]);
+        $fieldC->crops()->attach($crops['Pšenica'], ['hectares' => 7.3]);
     }
 }

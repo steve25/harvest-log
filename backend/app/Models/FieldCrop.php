@@ -10,4 +10,14 @@ class FieldCrop extends Model
     {
         return $this->hasMany(Weighing::class);
     }
+
+    public function field()
+    {
+        return $this->belongsTo(Field::class);
+    }
+
+    public function crop()
+    {
+        return $this->belongsTo(Crop::class);
+    }
 }

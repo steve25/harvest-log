@@ -2,6 +2,8 @@
 
 namespace Database\Seeders;
 
+use App\Models\FieldCrop;
+use App\Models\Vehicle;
 use App\Models\Weighing;
 use Carbon\Carbon;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
@@ -14,35 +16,24 @@ class WeighingSeeder extends Seeder
      */
     public function run(): void
     {
-        $weighings = [
-            [
-                'vehicle_id' => 1,
-                'field_crop_id' => 1,
-                'brutto_kg' => 12500.75,
-                'netto_kg' => 8320.50,
-                'tara_kg' => 4180.25,
-                'recorded_at' => Carbon::parse('2025-07-08 14:30:00'),
-            ],
-            [
-                'vehicle_id' => 2,
-                'field_crop_id' => 2,
-                'brutto_kg' => 14000.00,
-                'netto_kg' => 9200.00,
-                'tara_kg' => 4800.00,
-                'recorded_at' => Carbon::parse('2025-07-08 15:45:00'),
-            ],
-            [
-                'vehicle_id' => 3,
-                'field_crop_id' => 1,
-                'brutto_kg' => 11780.25,
-                'netto_kg' => 7980.25,
-                'tara_kg' => 3800.00,
-                'recorded_at' => Carbon::parse('2025-07-08 17:05:00'),
-            ],
-        ];
+        $vehicles = Vehicle::pluck('id')->toArray();
+        $fieldCrops = FieldCrop::pluck('id')->toArray();
 
-        foreach ($weighings as $data) {
-            Weighing::create($data);
+        $faker = \Faker\Factory::create('sk_SK');
+
+        for ($i = 0; $i < 20; $i++) {
+            $tara = $faker->randomFloat(2, 3000, 5000);
+            $brutto = $faker->randomFloat(2, $tara + 3000, $tara + 8000);
+            $netto = $brutto - $tara;
+
+            Weighing::create([
+                'vehicle_id' => $faker->randomElement($vehicles),
+                'field_crop_id' => $faker->randomElement($fieldCrops),
+                'brutto_kg' => $brutto,
+                'netto_kg' => $netto,
+                'tara_kg' => $tara,
+                'recorded_at' => Carbon::now()->subDays(rand(0, 7))->setTime(rand(6, 19), rand(0, 59))
+            ]);
         }
     }
 }

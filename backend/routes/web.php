@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Requests\StoreWeighingRequest;
+use App\Models\Crop;
 use App\Models\Field;
 use App\Models\Vehicle;
 use App\Models\Weighing;
@@ -23,6 +24,12 @@ Route::get('/fields', function () {
 Route::get('/fields/{id}/crops', function ($id) {
     return response()->json([
         'crops' => Field::with('crops')->findOrFail($id)->crops
+    ]);
+});
+
+Route::get('/crops', function () {
+    return response()->json([
+        'crops' => Crop::all()
     ]);
 });
 
@@ -51,6 +58,7 @@ Route::post('/weighings', function (StoreWeighingRequest $request) {
 
 Route::get('/weighings', function () {
     return response()->json([
-        'weighings' => Weighing::with(['vehicle', 'fieldCrop'])->get()
+        'weighings' => Weighing::with(['vehicle', 'fieldCrop.field', 'fieldCrop.crop'])->orderBy('recorded_at', 'desc')
+            ->get()
     ]);
 });
