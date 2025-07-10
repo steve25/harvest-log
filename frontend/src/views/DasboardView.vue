@@ -3,9 +3,9 @@
   <div class="max-w-6xl mx-auto bg-white shadow rounded-2xl p-6">
     <div class="flex justify-between items-center mb-6">
       <h1 class="text-2xl font-bold">Posledne vazenia</h1>
-      <button class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">
+      <RouterLink class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700" to="/add">
         + Nove vazenie
-      </button>
+      </RouterLink>
     </div>
 
     <div class="grid grid-cols-1 md:grid-cols-3 gap-3 mb-4">

@@ -1,7 +1,9 @@
 <template>
   <select class="border rounded px-3 py-2" @change="changeSelectedItems">
     <option value="">{{ title }}</option>
-    <option v-for="item in items" :key="item.id" :value="item.id">{{ item.name }}</option>
+    <option v-for="item in items" :key="item.id" :value="item.id">
+      {{ item.name || fieldCropName(item) }}
+    </option>
   </select>
 </template>
 
@@ -21,5 +23,9 @@ const emit = defineEmits(['select-items'])
 
 const changeSelectedItems = (e) => {
   emit('select-items', e.target.value)
+}
+
+const fieldCropName = (item) => {
+  return `${item.field.name} - ${item.crop.name}`
 }
 </script>
