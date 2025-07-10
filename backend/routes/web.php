@@ -3,6 +3,7 @@
 use App\Http\Requests\StoreWeighingRequest;
 use App\Models\Crop;
 use App\Models\Field;
+use App\Models\FieldCrop;
 use App\Models\Vehicle;
 use App\Models\Weighing;
 use Illuminate\Support\Facades\Route;
@@ -36,6 +37,12 @@ Route::get('/crops', function () {
 Route::get('/vehicles', function () {
     return response()->json([
         'vehicles' => Vehicle::all()
+    ]);
+});
+
+Route::get('/field-crops', function () {
+    return response()->json([
+        'field_crops' => FieldCrop::with(['field', 'crop'])->get()
     ]);
 });
 
