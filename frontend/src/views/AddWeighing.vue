@@ -43,6 +43,9 @@
           v-model="form.coming_weight_kg"
           class="px-3 py-2 w-full rounded-lg border-gray-300 shadow-sm focus:ring-blue-500 focus:border-blue-500"
         />
+        <p class="mt-2 text-sm text-red-600" v-if="errors?.coming_weight_kg">
+          {{ errors.coming_weight_kg[0] }}
+        </p>
       </div>
 
       <div class="pt-4 flex justify-center space-x-8 text-center">
@@ -99,10 +102,10 @@ const handleSubmit = async () => {
     vehicle_id: form.value.vehicle_id,
     field_crop_id: form.value.field_crop_id,
     coming_weight_kg: form.value.coming_weight_kg,
-    recorded_at: new Date().toISOString().slice(0, 19).replace('T', ' '),
+    start_record_at: new Date().toISOString().slice(0, 19).replace('T', ' '),
   }
 
-  console.log(form.value.netto, payload.netto_kg)
+  console.log(payload)
 
   try {
     const response = await axios.get('http://localhost:8000/csrf-token', {
@@ -124,7 +127,7 @@ const handleSubmit = async () => {
   } catch (error) {
     errors.value = error.response?.data?.errors
 
-    console.log(errors.value)
+    console.log(error)
   }
 }
 </script>

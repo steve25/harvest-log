@@ -47,16 +47,7 @@ Route::get('/field-crops', function () {
 });
 
 Route::post('/weighings', function (StoreWeighingRequest $request) {
-    $validated = $request->validated();
-
-    $weighing = Weighing::create([
-        'vehicle_id' => $validated['vehicle_id'],
-        'field_crop_id' => $validated['field_crop_id'],
-        'brutto_kg' => $validated['brutto_kg'],
-        'netto_kg' => $validated['netto_kg'],
-        'tara_kg' => $validated['tara_kg'],
-        'recorded_at' => $validated['recorded_at'],
-    ]);
+    $weighing = Weighing::create($request->validated());
 
     return response()->json([
         'weighing' => $weighing
@@ -65,7 +56,9 @@ Route::post('/weighings', function (StoreWeighingRequest $request) {
 
 Route::get('/weighings', function () {
     return response()->json([
-        'weighings' => Weighing::with(['vehicle', 'fieldCrop.field', 'fieldCrop.crop'])->orderBy('recorded_at', 'desc')
+        'weighings' => Weighing::with(['vehicle', 'fieldCrop.field', 'fieldCrop.crop'])
+            ->orderBy('start_record_at', 'desc')
+            ->orderBy('recorded_at', 'desc')
             ->get()
     ]);
 });
