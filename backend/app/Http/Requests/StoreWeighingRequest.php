@@ -24,9 +24,12 @@ class StoreWeighingRequest extends FormRequest
         return [
             'vehicle_id' => 'required|exists:vehicles,id',
             'field_crop_id' => 'required|exists:field_crops,id',
+            'storage_id' => 'required|exists:storages,id',
             'coming_weight_kg' => 'required|numeric',
             'leaving_weight_kg' => 'nullable|numeric',
             'netto_weight_kg' => 'nullable|numeric',
+            'bulk_density' => 'nullable|numeric',
+            'moisture' => 'nullable|numeric',
             'start_record_at' => 'required|date_format:Y-m-d H:i:s',
             'recorded_at' => 'nullable|date_format:Y-m-d H:i:s',
         ];

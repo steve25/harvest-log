@@ -13,8 +13,8 @@ return new class extends Migration
     {
         Schema::create('weighings', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('vehicle_id')->nullable()->constrained()->onDelete('set null');
-            $table->foreignId('field_crop_id')->nullable()->constrained()->onDelete('set null');
+            $table->foreignId('vehicle_id')->nullable()->constrained()->nullOnDelete();
+            $table->foreignId('field_crop_id')->nullable()->constrained()->nullOnDelete();
             $table->integer('coming_weight_kg')->nullable();
             $table->integer('leaving_weight_kg')->nullable();
             $table->integer('netto_weight_kg')->nullable();

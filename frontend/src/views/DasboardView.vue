@@ -23,12 +23,12 @@
         <thead>
           <tr class="bg-gray-50 text-sm md:text-base">
             <th class="py-2 px-3">Datum</th>
-            <th class="py-2 px-3"></th>
             <th class="py-2 px-3">Vozidlo</th>
             <th class="py-2 px-3">Pole / Plodina</th>
             <th class="py-2 px-3">Data</th>
             <th class="py-2 px-3">Vahy</th>
             <th class="py-2 px-3">Netto</th>
+            <th class="py-2 px-3">Odoslane do</th>
           </tr>
         </thead>
         <tbody class="divide-y">
@@ -43,7 +43,7 @@
               </p>
               <p>{{ formatTime(weighing.recorded_at || weighing.start_record_at) }}</p>
             </td>
-            <td class="text-center">
+            <!-- <td class="text-center">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="24"
@@ -71,7 +71,7 @@
                   d="m12 14.586-3.293-3.293-1.414 1.414L12 17.414l4.707-4.707-1.414-1.414L12 14.586z"
                 />
               </svg>
-            </td>
+            </td> -->
             <td class="py-2 px-3">
               <p>{{ weighing.vehicle.plate_number }}</p>
               <p class="hidden md:block">{{ weighing.vehicle.name }}</p>
@@ -114,11 +114,15 @@
             </td>
             <td class="py-2 px-3 whitespace-nowrap">
               {{
-                weighing.netto_weight_kg || weighing.coming_weight_kg > weighing.leaving_weight_kg
+                weighing.netto_weight_kg ??
+                (weighing.coming_weight_kg > weighing.leaving_weight_kg
                   ? weighing.coming_weight_kg
-                  : weighing.leaving_weight_kg
+                  : weighing.leaving_weight_kg)
               }}
               kg
+            </td>
+            <td class="py-2 px-3 whitespace-nowrap">
+              {{ weighing.storage?.name }}
             </td>
           </tr>
         </tbody>
@@ -172,6 +176,7 @@ onMounted(() => {
     .get('http://localhost:8000/weighings')
     .then((response) => {
       weighings.value = response.data.weighings
+      console.log(weighings.value)
     })
     .catch((error) => {
       console.error('Error fetching weighings:', error)

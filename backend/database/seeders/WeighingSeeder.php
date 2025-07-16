@@ -7,7 +7,6 @@ use App\Models\Storage;
 use App\Models\Vehicle;
 use App\Models\Weighing;
 use Carbon\Carbon;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
 class WeighingSeeder extends Seeder

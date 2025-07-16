@@ -33,18 +33,97 @@
         </p>
       </div>
 
+      <div class="grid grid-cols-3 gap-10">
+        <div>
+          <label id="coming_weight_kg" class="block mb-2 text-sm font-medium text-gray-700"
+            >Hmotnosť pri príchode (kg)</label
+          >
+          <input
+            id="coming_weight_kg"
+            type="number"
+            v-model="form.coming_weight_kg"
+            class="px-3 py-2 w-full rounded-lg border-gray-300 shadow-sm focus:ring-blue-500 focus:border-blue-500"
+          />
+          <p class="mt-2 text-sm text-red-600" v-if="errors?.coming_weight_kg">
+            {{ errors.coming_weight_kg[0] }}
+          </p>
+        </div>
+        <div>
+          <label id="coming_weight_kg" class="block mb-2 text-sm font-medium text-gray-700"
+            >Hmotnosť pri odchode (kg)</label
+          >
+          <input
+            id="leaving_weight_kg"
+            type="number"
+            v-model="form.leaving_weight_kg"
+            class="px-3 py-2 w-full rounded-lg border-gray-300 shadow-sm focus:ring-blue-500 focus:border-blue-500"
+          />
+          <p class="mt-2 text-sm text-red-600" v-if="errors?.leaving_weight_kg">
+            {{ errors.leaving_weight_kg[0] }}
+          </p>
+        </div>
+        <div>
+          <label id="coming_weight_kg" class="block mb-2 text-sm font-medium text-gray-700"
+            >Netto hmotnost (kg)</label
+          >
+          <input
+            id="netto_weight_kg"
+            type="number"
+            disabled
+            :value="form.coming_weight_kg - form.leaving_weight_kg"
+            class="px-3 py-2 w-full rounded-lg border-gray-300 shadow-sm focus:ring-blue-500 focus:border-blue-500"
+          />
+          <p class="mt-2 text-sm text-red-600" v-if="errors?.netto_weight_kg">
+            {{ errors.netto_weight_kg[0] }}
+          </p>
+        </div>
+      </div>
+
+      <div class="grid grid-cols-2 gap-10">
+        <div>
+          <label id="coming_weight_kg" class="block mb-2 text-sm font-medium text-gray-700"
+            >Objemova hmotnost (kg)</label
+          >
+          <input
+            id="bulk_density"
+            type="number"
+            v-model="form.bulk_density"
+            class="px-3 py-2 w-full rounded-lg border-gray-300 shadow-sm focus:ring-blue-500 focus:border-blue-500"
+          />
+          <p class="mt-2 text-sm text-red-600" v-if="errors?.bulk_density">
+            {{ errors.bulk_density[0] }}
+          </p>
+        </div>
+        <div>
+          <label id="coming_weight_kg" class="block mb-2 text-sm font-medium text-gray-700"
+            >Vlhkost</label
+          >
+          <input
+            id="moisture"
+            type="number"
+            v-model="form.moisture"
+            class="px-3 py-2 w-full rounded-lg border-gray-300 shadow-sm focus:ring-blue-500 focus:border-blue-500"
+          />
+          <p class="mt-2 text-sm text-red-600" v-if="errors?.moisture">
+            {{ errors.moisture[0] }}
+          </p>
+        </div>
+      </div>
+
       <div>
         <label id="coming_weight_kg" class="block mb-2 text-sm font-medium text-gray-700"
-          >Hmotnosť pri príchode (kg)</label
+          >Kam odoslane</label
         >
-        <input
-          id="coming_weight_kg"
-          type="number"
-          v-model="form.coming_weight_kg"
-          class="px-3 py-2 w-full rounded-lg border-gray-300 shadow-sm focus:ring-blue-500 focus:border-blue-500"
+        <DropdownMenu
+          class="w-full"
+          title="Vyber sklad"
+          :items="storages"
+          v-model="form.storage_id"
+          @select-items="form.storage_id = $event"
         />
-        <p class="mt-2 text-sm text-red-600" v-if="errors?.coming_weight_kg">
-          {{ errors.coming_weight_kg[0] }}
+
+        <p class="mt-2 text-sm text-red-600" v-if="errors?.storage_id">
+          {{ errors.storage_id[0] }}
         </p>
       </div>
 
@@ -74,6 +153,7 @@ import { ref, onMounted } from 'vue'
 
 const vehicles = ref([])
 const fieldCrops = ref([])
+const storages = ref([])
 const form = ref({})
 const errors = ref([])
 
@@ -95,13 +175,29 @@ onMounted(() => {
     .catch((error) => {
       console.error('Error fetching field/crops:', error)
     })
+
+  axios
+    .get('http://localhost:8000/storages')
+    .then((response) => {
+      storages.value = response.data.storages
+    })
+    .catch((error) => {
+      console.error('Error fetching field/crops:', error)
+    })
 })
 
 const handleSubmit = async () => {
+  console.log(form.value.storage_id)
+
   const payload = {
     vehicle_id: form.value.vehicle_id,
     field_crop_id: form.value.field_crop_id,
     coming_weight_kg: form.value.coming_weight_kg,
+    leaving_weight_kg: form.value.leaving_weight_kg,
+    netto_weight_kg: form.value.coming_weight_kg - form.value.leaving_weight_kg,
+    moisture: form.value.moisture,
+    bulk_density: form.value.bulk_density,
+    storage_id: form.value.storage_id,
     start_record_at: new Date().toISOString().slice(0, 19).replace('T', ' '),
   }
 

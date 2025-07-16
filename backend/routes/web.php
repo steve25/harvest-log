@@ -4,6 +4,7 @@ use App\Http\Requests\StoreWeighingRequest;
 use App\Models\Crop;
 use App\Models\Field;
 use App\Models\FieldCrop;
+use App\Models\Storage;
 use App\Models\Vehicle;
 use App\Models\Weighing;
 use Illuminate\Support\Facades\Route;
@@ -40,6 +41,12 @@ Route::get('/vehicles', function () {
     ]);
 });
 
+Route::get('/storages', function () {
+    return response()->json([
+        'storages' => Storage::all()
+    ]);
+});
+
 Route::get('/field-crops', function () {
     return response()->json([
         'field_crops' => FieldCrop::with(['field', 'crop'])->get()
@@ -56,7 +63,7 @@ Route::post('/weighings', function (StoreWeighingRequest $request) {
 
 Route::get('/weighings', function () {
     return response()->json([
-        'weighings' => Weighing::with(['vehicle', 'fieldCrop.field', 'fieldCrop.crop'])
+        'weighings' => Weighing::with(['vehicle', 'fieldCrop.field', 'fieldCrop.crop', 'storage'])
             ->orderBy('start_record_at', 'desc')
             ->orderBy('recorded_at', 'desc')
             ->get()

@@ -16,6 +16,7 @@ class Weighing extends Model
         'moisture',
         'start_record_at',
         'recorded_at',
+        'storage_id'
     ];
 
     public function vehicle()
