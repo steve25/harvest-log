@@ -9,10 +9,14 @@ class Weighing extends Model
     protected $fillable = [
         'vehicle_id',
         'field_crop_id',
-        'brutto_kg',
-        'netto_kg',
-        'tara_kg',
+        'coming_weight_kg',
+        'leaving_weight_kg',
+        'netto_weight_kg',
+        'bulk_density',
+        'moisture',
+        'start_record_at',
         'recorded_at',
+        'storage_id'
     ];
 
     public function vehicle()
@@ -23,5 +27,10 @@ class Weighing extends Model
     public function fieldCrop()
     {
         return $this->belongsTo(FieldCrop::class);
+    }
+
+    public function storage()
+    {
+        return $this->belongsTo(Storage::class);
     }
 }

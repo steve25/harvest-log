@@ -1,16 +1,18 @@
-export const forrmatDateTime = (dateTime) => {
+export const formatDate = (dateTime) => {
   const date = new Date(dateTime)
 
-  const dateString = date.toLocaleDateString('sk-Sk', {
-    year: 'numeric',
+  return date.toLocaleDateString('sk-SK', {
+    year: '2-digit',
     month: '2-digit',
     day: '2-digit',
   })
+}
 
-  const timeString = date.toLocaleTimeString('sk-Sk', {
+export const formatTime = (dateTime) => {
+  const date = new Date(dateTime)
+
+  return date.toLocaleTimeString('sk-SK', {
     hour: '2-digit',
     minute: '2-digit',
   })
-
-  return `${dateString} - ${timeString}`
 }
