@@ -175,7 +175,7 @@ onMounted(() => {
   axios
     .get('http://localhost:8000/weighings')
     .then((response) => {
-      weighings.value = response.data.weighings
+      weighings.value = response.data
       console.log(weighings.value)
     })
     .catch((error) => {
