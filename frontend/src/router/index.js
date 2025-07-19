@@ -1,5 +1,5 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import DashboardView from '../views/DasboardView.vue'
+import DashboardView from '../views/WeighingsView.vue'
 import AddWeighing from '../views/AddWeighing.vue'
 
 const router = createRouter({

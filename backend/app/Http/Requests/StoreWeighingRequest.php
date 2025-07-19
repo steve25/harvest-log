@@ -24,7 +24,7 @@ class StoreWeighingRequest extends FormRequest
         return [
             'vehicle_id' => 'required|exists:vehicles,id',
             'field_crop_id' => 'required|exists:field_crops,id',
-            'storage_id' => 'required|exists:storages,id',
+            'storage_id' => 'nullable|exists:storages,id',
             'coming_weight_kg' => 'required|numeric',
             'leaving_weight_kg' => 'nullable|numeric',
             'netto_weight_kg' => 'nullable|numeric',

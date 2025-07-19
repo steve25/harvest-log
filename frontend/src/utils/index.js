@@ -16,3 +16,18 @@ export const formatTime = (dateTime) => {
     minute: '2-digit',
   })
 }
+
+export const getCookie = (name) => {
+  return decodeURIComponent(
+    document.cookie
+      .split('; ')
+      .find((row) => row.startsWith(name + '='))
+      ?.split('=')[1] || '',
+  )
+}
+
+export const nowForDb = () => {
+  const now = new Date()
+  const offset = now.getTimezoneOffset() * 60000
+  return new Date(now.getTime() - offset).toISOString().slice(0, 19).replace('T', ' ')
+}

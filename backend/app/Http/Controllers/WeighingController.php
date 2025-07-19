@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreWeighingRequest;
 use App\Http\Requests\UpdateWeighingRequest;
 use App\Models\Weighing;
-use Illuminate\Http\Request;
 
 class WeighingController extends Controller
 {
