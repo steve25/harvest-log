@@ -2,7 +2,6 @@ export const formatDate = (dateTime) => {
   const date = new Date(dateTime)
 
   return date.toLocaleDateString('sk-SK', {
-    year: '2-digit',
     month: '2-digit',
     day: '2-digit',
   })

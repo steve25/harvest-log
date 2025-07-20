@@ -1,7 +1,7 @@
 <template>
   <div class="max-w-6xl mx-auto bg-white shadow rounded-2xl p-6">
     <div class="flex justify-between items-center mb-6">
-      <h1 class="text-2xl font-bold">Posledne vazenia</h1>
+      <h1 class="font-bold sm:text-xl md:text-2xl">Posledne vazenia</h1>
       <RouterLink class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700" to="/add">
         + Nove vazenie
       </RouterLink>
@@ -17,14 +17,18 @@
           <tr class="bg-gray-50 text-sm md:text-base">
             <th class="py-2 px-3">Datum</th>
             <th class="py-2 px-3">Vozidlo</th>
-            <th class="py-2 px-3">Pole / Plodina</th>
-            <th class="py-2 px-3">Data</th>
-            <th class="py-2 px-3">Vahy</th>
+            <th class="py-2 px-3">
+              Pole /<br />
+              Plodina
+            </th>
+            <th class="hidden sm:table-cell py-2 px-3">Parametre</th>
+            <th class="hidden sm:table-cell py-2 px-3">Vahy</th>
             <th class="py-2 px-3">Netto</th>
-            <th class="py-2 px-3">Odoslane do</th>
+            <th class="hidden sm:table-cell py-2 px-3">Odoslane do</th>
+            <th class="py-2 px-3"></th>
           </tr>
         </thead>
-        <tbody class="divide-y">
+        <tbody class="divide-y divide-gray-300">
           <WeighingRow
             v-for="weighing in filteredWeighings"
             :key="weighing.id ?? weighing.start_record_at"

@@ -52,7 +52,7 @@
         </FormField>
         <FormField
           id="netto_weight_kg"
-          label="Netto hmotnosť (kg)"
+          label="Hmotnosť netto (kg)"
           :errors="fieldError('netto_weight_kg')"
         >
           <input
@@ -65,7 +65,7 @@
         </FormField>
       </div>
 
-      <div class="grid grid-cols-2 gap-10">
+      <div class="grid grid-cols-2 gap-10 items-end">
         <FormField
           id="bulk_density"
           label="Objemova hmotnost (kg/m³)"
