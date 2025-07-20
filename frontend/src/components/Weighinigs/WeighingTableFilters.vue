@@ -1,5 +1,11 @@
 <template>
-  <div class="flex flex-wrap gap-x-4 gap-y-3 mb-4">
+  <button
+    @click="isFiltersOpen = !isFiltersOpen"
+    class="sm:hidden bg-gray-200 whitespace-nowrap border border-gray-900 rounded px-2 py-1 mb-4 cursor-pointer w-full"
+  >
+    Filtre
+  </button>
+  <div class="gap-x-4 gap-y-3 mb-4" :class="isFiltersOpen ? 'grid' : 'hidden sm:flex flex-wrap'">
     <DateFilter id="date-from" v-model="dateFrom" placeholder="Od" />
     <DateFilter id="date-to" v-model="dateTo" placeholder="Do" />
     <SelectDropdown title="Vozidla" :items="reference.vehicles" v-model="selectedVehicle" />
@@ -24,6 +30,8 @@ import DropdownMenu from '@/components/Form/DropdownMenu.vue'
 import { computed, onMounted, ref, watch } from 'vue'
 
 import { useReferenceStore } from '@/stores/referenceStore'
+
+const isFiltersOpen = ref(false)
 
 const dateFrom = ref('')
 const dateTo = ref('')
