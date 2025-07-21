@@ -1,19 +1,25 @@
 import http from './index.js'
 
-export const getWeighings = async () => {
-  try {
-    const response = await http.get('/weighings')
-    return response.data
-  } catch (error) {
-    console.error('Error fetching weighings:', error)
-  }
+export const fetchWeighingsApi = async () => {
+  const response = await http.get('/weighings')
+  return response.data
 }
 
-export const createWeighing = async (weighing) => {
-  try {
-    await http.post('/weighings', weighing)
-  } catch (error) {
-    console.error('Error store weighing:', error)
-    throw error
-  }
+export const fetchWeighingApi = async (id) => {
+  const response = await http.get(`/weighings/${id}`)
+  return response.data
+}
+
+export const createWeighingApi = async (weighing) => {
+  const response = await http.post('/weighings', weighing)
+  return response.data
+}
+
+export const editWeighingApi = async (id, weighing) => {
+  const response = await http.put(`/weighings/${id}`, weighing)
+  return response.data
+}
+
+export const deleteWeighingApi = async (id) => {
+  await http.delete(`/weighings/${id}`)
 }
