@@ -1,5 +1,5 @@
 <template>
-  <select class="border rounded min-w-52 px-3 py-2" v-model="model">
+  <select class="border rounded min-w-52 px-3 py-2" v-model="model" :disabled="isReadonly">
     <option :value="null" disabled>{{ title }}</option>
     <option v-for="item in items" :key="item.id" :value="item.id">
       {{ getItemName(item) }}
@@ -8,7 +8,7 @@
 </template>
 
 <script setup>
-const { items, title } = defineProps({
+const { items, title, isReadonly } = defineProps({
   items: {
     type: Array,
     required: true,
@@ -16,6 +16,10 @@ const { items, title } = defineProps({
   title: {
     type: String,
     required: true,
+  },
+
+  isReadonly: {
+    type: Boolean,
   },
 })
 
