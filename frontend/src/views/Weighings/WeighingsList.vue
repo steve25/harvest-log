@@ -9,7 +9,6 @@
         + Nove vazenie
       </RouterLink>
     </div>
-    <ConfirmDialog />
 
     <TableFilters :weighings="weighingsStore.weighings" @update-filter="onUpdateFilter" />
 
@@ -54,7 +53,6 @@ import { RouterLink } from 'vue-router'
 import TableFilters from '@/components/Weighinigs/WeighingTableFilters.vue'
 import WeighingRow from '@/components/Weighinigs/WeighingRow.vue'
 
-import ConfirmDialog from '@/components/ConfirmDialog.vue'
 import { useWeighingsStore } from '@/stores/wighingsStore'
 
 const weighingsStore = useWeighingsStore()

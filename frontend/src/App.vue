@@ -35,11 +35,14 @@
   </header>
 
   <RouterView />
+  <ConfirmDialog />
+
 </template>
 
 <script setup>
 import { RouterLink, RouterView } from 'vue-router'
 import HamburgerMenu from './assets/icons/HamburgerMenu.vue'
+import ConfirmDialog from '@/components/ConfirmDialog.vue'
 import { ref } from 'vue'
 
 const isHamburgerOpen = ref(false)

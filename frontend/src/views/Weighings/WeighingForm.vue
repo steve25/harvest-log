@@ -131,9 +131,19 @@
           v-else
           :disabled="processing"
           type="submit"
-          class="basis-2/3 cursor-pointer bg-blue-600 hover:bg-blue-700 text-white font-medium py-2.5 px-4 rounded-lg transition"
+          class="cursor-pointer bg-blue-600 hover:bg-blue-700 text-white font-medium py-2.5 px-4 rounded-lg transition"
+          :class="props.mode === 'edit' ? 'basis-1/3' : 'basis-2/3'"
         >
           Uložiť záznam
+        </button>
+        <button
+          v-if="props.mode === 'edit'"
+          :disabled="processing"
+          type="button"
+          @click.prevent="onDelete"
+          class="basis-1/3 cursor-pointer bg-red-600 hover:bg-red-700 text-white font-medium py-2.5 px-4 rounded-lg transition"
+        >
+          Zmazat
         </button>
         <RouterLink
           to="/weighings/list"
@@ -157,8 +167,10 @@ import { nowForDb } from '@/utils'
 import { useRoute } from 'vue-router'
 import router from '@/router'
 import { useWeighingsStore } from '@/stores/wighingsStore'
+import { useConfirmStore } from '@/stores/confirmStore.js'
 
 const route = useRoute()
+const confirm = useConfirmStore()
 
 const props = defineProps({
   mode: String,
@@ -183,7 +195,7 @@ const loadReferenceData = async () => {
 }
 
 onMounted(async () => {
-  loadReferenceData()
+  await loadReferenceData()
   if (props.mode !== 'add') await setForm(() => weighingsStore.fetchWeighing(route.params.id))
 })
 
@@ -211,5 +223,14 @@ const handleSubmit = async () => {
   await submit(payload, props.mode)
 
   router.push('/weighings/list')
+}
+
+const onDelete = async () => {
+  const isDelete = await confirm.confirm('Naozaj chces zmazat tuto polozku?')
+
+  if (isDelete) {
+    await weighingsStore.deleteWeighing(form.id)
+    router.push('/weighings/list')
+  }
 }
 </script>
