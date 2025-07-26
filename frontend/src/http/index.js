@@ -17,13 +17,14 @@ http.interceptors.request.use(
 
     if (!csrfToken || csrfToken === 'undefined') {
       try {
-        const response = await axios.get('http://localhost:8000/csrf-token', {
+        const response = await axios.get(`${import.meta.env.VITE_API_URL}/csrf-token`, {
           withCredentials: true,
           headers: {
             Accept: 'application/json',
           },
         })
-        csrfToken = response.data.token
+        csrfToken = response.data.csrf_token
+        console.log(csrfToken)
         localStorage.setItem('CSRF_TOKEN', csrfToken)
       } catch (error) {
         console.error('Failed to fetch CSRF token', error)
