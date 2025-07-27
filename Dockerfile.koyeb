@@ -1,2 +1,4 @@
 FROM koyeb/docker-compose
 COPY . /app
+
+CMD ["docker-compose", "--profile", "dev", "up", "-d", "--build"]
