@@ -1,0 +1,24 @@
+FROM php:8.2-fpm-alpine
+
+# Inštalácia závislostí
+RUN apk add --no-cache \
+    curl \
+    libpng-dev \
+    libxml2-dev \
+    oniguruma-dev \
+    zip \
+    unzip \
+    && docker-php-ext-install pdo_mysql mbstring exif pcntl bcmath gd \
+    && docker-php-ext-enable pdo_mysql
+
+# Composer
+COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
+
+WORKDIR /var/www/html
+COPY . .
+
+# Inštalácia závislostí
+RUN composer install --no-interaction
+
+# Spustenie Laravel servera
+CMD ["php", "artisan", "serve", "--host=0.0.0.0", "--port=8000"]

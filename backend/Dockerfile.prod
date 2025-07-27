@@ -1,0 +1,37 @@
+# Multi-stage build
+FROM php:8.2-fpm-alpine AS builder
+
+# Inštalácia závislostí
+RUN apk add --no-cache \
+    curl \
+    libpng-dev \
+    libxml2-dev \
+    oniguruma-dev \
+    zip \
+    unzip \
+    && docker-php-ext-install pdo_mysql mbstring exif pcntl bcmath gd \
+    && docker-php-ext-enable pdo_mysql
+
+# Composer
+COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
+
+WORKDIR /var/www/html
+COPY . .
+
+# Cacheovanie závislostí
+COPY ./backend/composer.json ./backend/composer.lock ./
+RUN composer install --no-dev --optimize-autoloader --no-interaction
+
+# Produkčné optimalizácie
+RUN php artisan config:cache \
+    && php artisan route:cache \
+    && php artisan view:cache
+
+# Finálny obraz
+FROM php:8.2-fpm-alpine
+
+WORKDIR /var/www/html
+COPY --from=builder /var/www/html /var/www/html
+
+# Spustenie php-fpm
+CMD ["php-fpm"]
