@@ -84,3 +84,9 @@ Route::post('/weight', function (Request $request) {
 
 
 Route::resource('/weighings', WeighingController::class);
+
+Route::get('/test', function () {
+    return response()->json([
+        'test' => 'test'
+    ]);
+});
