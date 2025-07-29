@@ -1,14 +1,11 @@
-# Multi-stage build
-FROM node:20-alpine AS builder
-
+FROM node:16.10.0-alpine3.13 as build-stage
 WORKDIR /app
-COPY ./package*.json ./
+COPY package*.json ./
 RUN npm install
 COPY . .
 RUN npm run build
 
-# Finálny obraz
-FROM node:20-alpine
-
+FROM alpine:latest
 WORKDIR /app
-COPY --from=builder /app/dist ./dist
+COPY --from=build-stage /app/dist ./dist
+CMD ["sh", "-c", "echo 'Build complete. The dist folder is ready.' && sleep infinity"]

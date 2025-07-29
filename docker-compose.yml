@@ -62,7 +62,7 @@ services:
       - frontend
     volumes:
       - ./nginx/nginx.prod.conf:/etc/nginx/nginx.conf:ro
-      - ./frontend_dist:/usr/share/nginx/html:ro
+      - frontend_dist:/usr/share/nginx/html:ro
     healthcheck:
       test: ['CMD', 'curl', '-f', 'http://localhost']
       interval: 30s
