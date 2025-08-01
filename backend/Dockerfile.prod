@@ -1,45 +1,35 @@
-# Multi-stage build
-FROM php:8.2-fpm-alpine AS builder
+FROM php:8.2-fpm-alpine as base
 
-# Inštalácia závislostí
 RUN apk add --no-cache \
-    curl \
     libpng-dev \
     libxml2-dev \
     oniguruma-dev \
-   mysql-client \
+    mysql-client \
     zip \
     unzip \
     && docker-php-ext-install pdo_mysql mbstring exif pcntl bcmath gd
 
-# Install Composer
+# Build stage (Composer, Artisan)
+FROM base as builder
+
 WORKDIR /var/www/html
+COPY . .
 
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 
-
-# Install PHP dependencies
-
-COPY . .
-
-RUN composer install --no-dev --optimize-autoloader --no-interaction
-
-# Cache Laravel configurations
-RUN php artisan config:cache \
+# RUN composer install --no-dev --optimize-autoloader --no-interaction \
+RUN composer install --optimize-autoloader --no-interaction \
+&& php artisan config:cache \
     && php artisan route:cache \
     && php artisan view:cache
 
-# Final stage
-FROM php:8.2-fpm-alpine
+# Final runtime stage
+FROM base
 
 WORKDIR /var/www/html
 COPY --from=builder /var/www/html /var/www/html
 
-# Set permissions
 RUN chown -R www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cache
 
-# Expose port 9000 for PHP-FPM
 EXPOSE 9000
-
-# Start PHP-FPM
 CMD ["php-fpm"]

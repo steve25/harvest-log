@@ -3,7 +3,7 @@ import axios from 'axios'
 
 const http = axios.create({
   baseURL: import.meta.env.VITE_API_URL,
-  timeout: 1000,
+  timeout: 5000,
   headers: {
     'Content-Type': 'application/json',
     Accept: 'application/json',
@@ -24,7 +24,6 @@ http.interceptors.request.use(
           },
         })
         csrfToken = response.data.csrf_token
-        console.log(csrfToken)
         localStorage.setItem('CSRF_TOKEN', csrfToken)
       } catch (error) {
         console.error('Failed to fetch CSRF token', error)

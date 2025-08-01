@@ -19,6 +19,8 @@ services:
       interval: 30s
       timeout: 10s
       retries: 3
+    volumes:
+      - ./backend:/var/www/html
 
   frontend:
     build:
@@ -63,6 +65,8 @@ services:
     volumes:
       - ./nginx/nginx.prod.conf:/etc/nginx/nginx.conf:ro
       - frontend_dist:/usr/share/nginx/html:ro
+      - ./backend:/var/www/html:ro
+
     healthcheck:
       test: ['CMD', 'curl', '-f', 'http://localhost']
       interval: 30s
