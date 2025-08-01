@@ -1,0 +1,11 @@
+FROM node:lts-alpine3.22 as build-stage
+WORKDIR /app
+COPY package*.json ./
+RUN npm install
+COPY . .
+RUN npm run build
+
+FROM alpine:latest
+WORKDIR /app
+COPY --from=build-stage /app/dist ./dist
+CMD ["sh", "-c", "echo 'Build complete. The dist folder is ready.' && sleep infinity"]

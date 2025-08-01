@@ -2,53 +2,79 @@ services:
   backend:
     build:
       context: ./backend
-      dockerfile: Dockerfile
+      dockerfile: Dockerfile.prod
     container_name: harvest-backend
-    ports:
-      - '8000:8000'
     environment:
       APP_ENV: production
-      APP_DEBUG: 'false'
+      APP_DEBUG: false
       DB_HOST: db
       DB_DATABASE: harvest
-      DB_USERNAME: root
-      DB_PASSWORD: root
+      DB_USERNAME: harvest_user
+      DB_PASSWORD: ${DB_PASSWORD:-securepassword}
     depends_on:
-      - db
+      db:
+        condition: service_healthy
+    healthcheck:
+      test: ['CMD', 'curl', '-f', 'http://localhost:8000']
+      interval: 30s
+      timeout: 10s
+      retries: 3
+    volumes:
+      - ./backend:/var/www/html
 
   frontend:
     build:
       context: ./frontend
-      dockerfile: Dockerfile
+      dockerfile: Dockerfile.prod
     container_name: harvest-frontend
-    ports:
-      - '5173:5173'
     environment:
       - NODE_ENV=production
     depends_on:
       - backend
+    healthcheck:
+      test: ['CMD', 'curl', '-f', 'http://localhost:5173']
+      interval: 30s
+      timeout: 10s
+      retries: 3
+    volumes:
+      - frontend_dist:/app/dist
 
   db:
     image: mysql:8.0
     container_name: harvest-db
-    restart: always
+    restart: unless-stopped
     environment:
-      MYSQL_ROOT_PASSWORD: root
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD:-root}
       MYSQL_DATABASE: harvest
+      MYSQL_USER: harvest_user
+      MYSQL_PASSWORD: ${DB_PASSWORD:-securepassword}
     volumes:
       - db_data:/var/lib/mysql
-    ports:
-      - '3306:3306'
+    healthcheck:
+      test: ['CMD', 'mysqladmin', 'ping', '-h', 'localhost']
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
   nginx:
     image: nginx:alpine
     container_name: harvest-nginx
-    ports:
-      - '80:80'
-    volumes:
-      - ./nginx.conf:/etc/nginx/nginx.conf:ro
     depends_on:
       - backend
       - frontend
+    volumes:
+      - ./nginx/nginx.prod.conf:/etc/nginx/nginx.conf:ro
+      - frontend_dist:/usr/share/nginx/html:ro
+      - ./backend:/var/www/html:ro
+
+    healthcheck:
+      test: ['CMD', 'curl', '-f', 'http://localhost']
+      interval: 30s
+      timeout: 10s
+      retries: 3
+    ports:
+      - '80:80'
 
 volumes:
   db_data:
+  frontend_dist:

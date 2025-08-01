@@ -36,7 +36,6 @@
 
   <RouterView />
   <ConfirmDialog />
-
 </template>
 
 <script setup>

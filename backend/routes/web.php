@@ -7,13 +7,15 @@ use App\Models\Field;
 use App\Models\FieldCrop;
 use App\Models\Storage;
 use App\Models\Vehicle;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('csrf-token', function () {
+Route::get('/csrf-token', function () {
     return response()->json(['csrf_token' => csrf_token()]);
 });
 
@@ -53,6 +55,16 @@ Route::get('/field-crops', function () {
     ]);
 });
 
+Route::post('/weight', function (Request $request) {
+    // Cache::clear('weight');
+    // Cache::forever('weight', $request->weight_kg);
+
+    return response()->json([
+        'weight' => $request->weight_kg
+        // 'weight' => $request->weight_kg
+    ]);
+});
+
 // Route::post('/weighings', function (StoreWeighingRequest $request) {
 //     $weighing = Weighing::create($request->validated());
 
@@ -72,3 +84,9 @@ Route::get('/field-crops', function () {
 
 
 Route::resource('/weighings', WeighingController::class);
+
+Route::get('/test', function () {
+    return response()->json([
+        'test' => 'test'
+    ]);
+});
