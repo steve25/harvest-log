@@ -9,6 +9,7 @@ services:
     environment:
       APP_ENV: development
       APP_DEBUG: true
+    user: "${UID:-1000}:${GID:-1000}"
 
   frontend:
     build:
