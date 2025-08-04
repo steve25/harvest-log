@@ -6,8 +6,16 @@ $vendorDir = dirname(__DIR__);
 $baseDir = dirname($vendorDir);
 
 return array(
+    'App\\Http\\Controllers\\Api\\Auth\\LoginController' => $baseDir . '/app/Http/Controllers/Api/Auth/LoginController.php',
+    'App\\Http\\Controllers\\Api\\Auth\\LogoutController' => $baseDir . '/app/Http/Controllers/Api/Auth/LogoutController.php',
+    'App\\Http\\Controllers\\Api\\Auth\\RegisterController' => $baseDir . '/app/Http/Controllers/Api/Auth/RegisterController.php',
+    'App\\Http\\Controllers\\Auth\\LoginController' => $baseDir . '/app/Http/Controllers/Auth/LoginController.php',
+    'App\\Http\\Controllers\\Auth\\LogoutController' => $baseDir . '/app/Http/Controllers/Auth/LogoutController.php',
+    'App\\Http\\Controllers\\Auth\\RegisterController' => $baseDir . '/app/Http/Controllers/Auth/RegisterController.php',
     'App\\Http\\Controllers\\Controller' => $baseDir . '/app/Http/Controllers/Controller.php',
     'App\\Http\\Controllers\\WeighingController' => $baseDir . '/app/Http/Controllers/WeighingController.php',
+    'App\\Http\\Requests\\LoginRequest' => $baseDir . '/app/Http/Requests/LoginRequest.php',
+    'App\\Http\\Requests\\RegisterRequest' => $baseDir . '/app/Http/Requests/RegisterRequest.php',
     'App\\Http\\Requests\\StoreWeighingRequest' => $baseDir . '/app/Http/Requests/StoreWeighingRequest.php',
     'App\\Http\\Requests\\UpdateWeighingRequest' => $baseDir . '/app/Http/Requests/UpdateWeighingRequest.php',
     'App\\Models\\Crop' => $baseDir . '/app/Models/Crop.php',

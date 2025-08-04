@@ -522,8 +522,16 @@ class ComposerStaticInit88970a0117c062eed55fa8728fc43833
     );
 
     public static $classMap = array (
+        'App\\Http\\Controllers\\Api\\Auth\\LoginController' => __DIR__ . '/../..' . '/app/Http/Controllers/Api/Auth/LoginController.php',
+        'App\\Http\\Controllers\\Api\\Auth\\LogoutController' => __DIR__ . '/../..' . '/app/Http/Controllers/Api/Auth/LogoutController.php',
+        'App\\Http\\Controllers\\Api\\Auth\\RegisterController' => __DIR__ . '/../..' . '/app/Http/Controllers/Api/Auth/RegisterController.php',
+        'App\\Http\\Controllers\\Auth\\LoginController' => __DIR__ . '/../..' . '/app/Http/Controllers/Auth/LoginController.php',
+        'App\\Http\\Controllers\\Auth\\LogoutController' => __DIR__ . '/../..' . '/app/Http/Controllers/Auth/LogoutController.php',
+        'App\\Http\\Controllers\\Auth\\RegisterController' => __DIR__ . '/../..' . '/app/Http/Controllers/Auth/RegisterController.php',
         'App\\Http\\Controllers\\Controller' => __DIR__ . '/../..' . '/app/Http/Controllers/Controller.php',
         'App\\Http\\Controllers\\WeighingController' => __DIR__ . '/../..' . '/app/Http/Controllers/WeighingController.php',
+        'App\\Http\\Requests\\LoginRequest' => __DIR__ . '/../..' . '/app/Http/Requests/LoginRequest.php',
+        'App\\Http\\Requests\\RegisterRequest' => __DIR__ . '/../..' . '/app/Http/Requests/RegisterRequest.php',
         'App\\Http\\Requests\\StoreWeighingRequest' => __DIR__ . '/../..' . '/app/Http/Requests/StoreWeighingRequest.php',
         'App\\Http\\Requests\\UpdateWeighingRequest' => __DIR__ . '/../..' . '/app/Http/Requests/UpdateWeighingRequest.php',
         'App\\Models\\Crop' => __DIR__ . '/../..' . '/app/Models/Crop.php',

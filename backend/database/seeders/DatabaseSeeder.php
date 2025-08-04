@@ -20,6 +20,11 @@ class DatabaseSeeder extends Seeder
             'email' => 'test@example.com',
         ]);
 
+        User::factory()->create([
+            'name' => 'Weight Device',
+            'email' => 'weight.device@example.com',
+        ]);
+
         $this->call([
             CropSeeder::class,
             FieldSeeder::class,

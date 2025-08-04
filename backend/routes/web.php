@@ -5,9 +5,6 @@ use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\LogoutController;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', function () {
-    return view('welcome');
-});
 
 Route::prefix('auth')->group(function () {
     Route::post('/login', LoginController::class);
@@ -15,8 +12,10 @@ Route::prefix('auth')->group(function () {
     Route::post('/logout', LogoutController::class)->middleware('auth');
 });
 
-Route::get('/test', function () {
-    return response()->json([
-        'test' => 'test'
-    ]);
+Route::prefix('test')->group(function () {
+    Route::get('/test', function () {
+        return response()->json([
+            'test' => 'test'
+        ]);
+    });
 });
