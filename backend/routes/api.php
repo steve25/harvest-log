@@ -4,12 +4,14 @@ use App\Http\Controllers\Api\Auth\LoginController;
 use App\Http\Controllers\Api\Auth\LogoutController;
 use App\Http\Controllers\Api\Auth\RegisterController;
 use App\Http\Controllers\WeighingController;
+use App\Http\Controllers\WeightController;
 use App\Models\Crop;
 use App\Models\Field;
 use App\Models\FieldCrop;
 use App\Models\Storage;
 use App\Models\Vehicle;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/user', function (Request $request) {
@@ -62,11 +64,5 @@ Route::get('/field-crops', function () {
     ]);
 });
 
-Route::post('/weight', function (Request $request) {
-    // Cache::clear('weight');
-    // Cache::forever('weight', $request->weight_kg);
-
-    return response()->json([
-        'weight' => $request->weight_kg
-    ]);
-});
+Route::put('/weight', [WeightController::class, 'update'])->middleware('auth:sanctum');
+Route::get('/weight', [WeightController::class, 'show']);
