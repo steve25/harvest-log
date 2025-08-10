@@ -55,8 +55,9 @@ const closeMenu = () => {
 }
 
 const navLinks = [
-  { to: '/weighings/list', label: 'Žatva' },
-  { to: '/weighings', label: 'Vozidlá' },
+  { to: '/harvest/weighings', label: 'Žatva' },
+  { to: '/harvest', label: 'Vozidlá' },
+  { to: '/weight', label: 'Vaha' },
 ]
 </script>
 

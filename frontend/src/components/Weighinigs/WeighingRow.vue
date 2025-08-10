@@ -42,7 +42,7 @@
           title="Zobraziť"
           aria-label="Zobraziť"
         >
-          <RouterLink :to="`${weighing.id}/show`">
+          <RouterLink :to="`weighings/${weighing.id}/show`">
             <EyeIcon />
           </RouterLink>
         </button>
@@ -53,7 +53,7 @@
           title="Upraviť"
           aria-label="Upraviť"
         >
-          <RouterLink :to="`${weighing.id}/edit`">
+          <RouterLink :to="`weighings/${weighing.id}/edit`">
             <PenIcon />
           </RouterLink>
         </button>
@@ -118,7 +118,7 @@
             title="Zobraziť"
             aria-label="Zobraziť"
           >
-            <RouterLink to="weighings/show">
+            <RouterLink :to="`weighings/${weighing.id}/show`">
               <EyeIcon />
             </RouterLink>
           </button>
@@ -129,7 +129,9 @@
             title="Upraviť"
             aria-label="Upraviť"
           >
-            <PenIcon />
+            <RouterLink :to="`weighings/${weighing.id}/edit`">
+              <PenIcon />
+            </RouterLink>
           </button>
 
           <!-- Delete -->

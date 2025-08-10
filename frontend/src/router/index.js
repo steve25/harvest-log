@@ -1,36 +1,41 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import WeighingsList from '../views/Weighings/WeighingsList.vue'
-import WeighingForm from '../views/Weighings/WeighingForm.vue'
-import WeighingView from '@/views/Weighings/WeighingView.vue'
+import WeighingsList from '@/views/Harvest/WeighingsList.vue'
+import WeighingForm from '@/views/Harvest/WeighingForm.vue'
+import HarvestView from '@/views/Harvest/HarvestView.vue'
+import WeightView from '@/views/Weight/WeightView.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
     {
-      path: '/weighings',
-      component: WeighingView,
+      path: '/harvest',
+      component: HarvestView,
       children: [
         {
-          path: 'list',
+          path: 'weighings',
           component: WeighingsList,
         },
         {
-          path: 'add',
+          path: 'weighings/add',
           component: WeighingForm,
           props: { mode: 'add' },
         },
         {
-          path: ':id/edit',
+          path: 'weighings/:id/edit',
           component: WeighingForm,
           props: { mode: 'edit' },
         },
         {
-          path: ':id/show',
+          path: 'weighings/:id/show',
           component: WeighingForm,
           props: { mode: 'show' },
         },
       ],
     },
+    {
+      path: '/weight',
+      component: WeightView,
+    }
   ],
 })
 
