@@ -4,7 +4,7 @@
       <h1 class="font-bold sm:text-xl md:text-2xl">Posledne vazenia</h1>
       <RouterLink
         class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700"
-        to="/weighings/add"
+        to="weighings/add"
       >
         + Nove vazenie
       </RouterLink>
@@ -31,7 +31,7 @@
             </th>
             <th class="hidden sm:table-cell py-2 px-3">Parametre</th>
             <th class="hidden sm:table-cell py-2 px-3">Sklad</th>
-            <th class="py-2 px-3">Akcia</th>
+            <th class="hidden sm:table-cell py-2 px-3">Akcia</th>
           </tr>
         </thead>
         <tbody class="divide-y divide-gray-300">

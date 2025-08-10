@@ -119,14 +119,12 @@
       </FormField>
 
       <div class="pt-4 flex justify-center space-x-8 text-center">
-        <button
+        <RouterLink
           v-if="props.mode === 'show'"
-          :disabled="processing"
-          type="submit"
           class="basis-2/3 cursor-pointer bg-blue-600 hover:bg-blue-700 text-white font-medium py-2.5 px-4 rounded-lg transition"
-        >
-          <RouterLink :to="`/weighings/${route.params.id}/edit`"> Editovat záznam </RouterLink>
-        </button>
+          :to="`/harvest/weighings/${route.params.id}/edit`">
+          Editovat záznam
+        </RouterLink>
         <button
           v-else
           :disabled="processing"
@@ -146,7 +144,7 @@
           Zmazat
         </button>
         <RouterLink
-          to="/weighings/list"
+          to="/harvest/weighings"
           class="basis-1/3 bg-blue-600 hover:bg-blue-700 text-white font-medium py-2.5 px-4 rounded-lg transition"
         >
           Zrus
@@ -222,7 +220,7 @@ const handleSubmit = async () => {
 
   await submit(payload, props.mode)
 
-  router.push('/weighings/list')
+  await router.push('/harvest/weighings')
 }
 
 const onDelete = async () => {
@@ -230,7 +228,7 @@ const onDelete = async () => {
 
   if (isDelete) {
     await weighingsStore.deleteWeighing(form.id)
-    router.push('/weighings/list')
+    await router.push('/harvest/weighings')
   }
 }
 </script>
